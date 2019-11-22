@@ -1,0 +1,18 @@
+*.log
+#**/logs
+
+/.vs
+
+# compiled files
+**/obj
+**/bin
+# user files
+*.user
+
+Error/
+Log/
+thumbs/
+*.suo
+/publish
+**/internal-nlog.txt
+publish-fake
