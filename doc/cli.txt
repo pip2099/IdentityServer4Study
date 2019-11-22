@@ -1,0 +1,27 @@
+dotnet new -i IdentityServer4.Templates
+
+dotnet new is4empty -n IdentityServer
+
+
+dotnet new is4ui
+
+================
+
+
+E:\Practice\dotnet\quickstart\src\IdentityServer>dotnet tool install --global dotnet-ef --version 3.0.0-*
+可使用以下命令调用工具: dotnet-ef
+已成功安装工具“dotnet-ef”(版本“3.0.0”)。
+
+E:\Practice\dotnet\quickstart\src\IdentityServer>dotnet ef migrations add InitialIdentityServerPersistedGrantDbMigration
+ -c PersistedGrantDbContext -o Data/Migrations/IdentityServer/PersistedGrantDb
+The EF Core tools version '3.0.0' is older than that of the runtime '3.0.1'. Update the tools for the latest features an
+d bug fixes.
+Done. To undo this action, use 'ef migrations remove'
+
+E:\Practice\dotnet\quickstart\src\IdentityServer>dotnet ef migrations add InitialIdentityServerConfigurationDbMigration
+-c ConfigurationDbContext -o Data/Migrations/IdentityServer/ConfigurationDb
+The EF Core tools version '3.0.0' is older than that of the runtime '3.0.1'. Update the tools for the latest features an
+d bug fixes.
+Done. To undo this action, use 'ef migrations remove'
+
+E:\Practice\dotnet\quickstart\src\IdentityServer>
