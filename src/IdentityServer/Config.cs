@@ -52,7 +52,8 @@ namespace IdentityServer
                 ClientSecrets = { new Secret("secret".Sha256()) },
 
                 AllowedGrantTypes = GrantTypes.Code,
-                RequireConsent = false,
+                //AllowedGrantTypes = GrantTypes.Implicit,
+                RequireConsent = true,
                 RequirePkce = true,
 
                 // where to redirect to after login
@@ -65,9 +66,28 @@ namespace IdentityServer
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
+                    IdentityServerConstants.StandardScopes.Address,
+                    IdentityServerConstants.StandardScopes.Phone,
+                    IdentityServerConstants.StandardScopes.Email,
                     "api1"
                 }
                 ,AllowOfflineAccess = true
+            },
+            new Client
+            {
+                ClientId = "mvc-Hybrid-client",
+                ClientName="Hybrid client",
+                ClientSecrets = { new Secret("secret".Sha256()) },
+
+                AllowedGrantTypes = GrantTypes.Hybrid,
+
+                // where to redirect to after login
+                RedirectUris = { "http://localhost:5002/signin-oidc" },
+
+                AllowedScopes = new List<string>
+                {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                }
             }
         };
 

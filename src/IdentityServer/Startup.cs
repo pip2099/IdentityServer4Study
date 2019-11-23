@@ -23,28 +23,28 @@ namespace IdentityServer
             Environment = environment;
         }
 
-        //public void ConfigureServices(IServiceCollection services)
-        //{
-        //    // uncomment, if you want to add an MVC-based UI
-        //    services.AddControllersWithViews();
-
-        //    var builder = services.AddIdentityServer()
-        //        .AddInMemoryIdentityResources(Config.Ids)
-        //        .AddInMemoryApiResources(Config.Apis)
-        //        .AddInMemoryClients(Config.Clients)
-        //        .AddTestUsers(TestUsers.Users);
-
-        //    // not recommended for production - you need to store your key material somewhere secure
-        //    builder.AddDeveloperSigningCredential();
-        //}
-
         public void ConfigureServices(IServiceCollection services)
         {
             // uncomment, if you want to add an MVC-based UI
             services.AddControllersWithViews();
 
-            DbContextOptionsBuilder(services);
+            var builder = services.AddIdentityServer()
+                .AddInMemoryIdentityResources(Config.Ids)
+                .AddInMemoryApiResources(Config.Apis)
+                .AddInMemoryClients(Config.Clients)
+                .AddTestUsers(TestUsers.Users);
+
+            // not recommended for production - you need to store your key material somewhere secure
+            builder.AddDeveloperSigningCredential();
         }
+
+        //public void ConfigureServices(IServiceCollection services)
+        //{
+        //    // uncomment, if you want to add an MVC-based UI
+        //    services.AddControllersWithViews();
+
+        //    DbContextOptionsBuilder(services);
+        //}
 
         public void DbContextOptionsBuilder(IServiceCollection services)
         {

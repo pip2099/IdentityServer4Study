@@ -28,21 +28,25 @@ namespace MVCOpenIDClient
         {
             services.AddControllersWithViews();
 
-            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+            //JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
             services.AddAuthentication(options =>
             {
-                options.DefaultScheme = "Cookies";//使用Cookies认证
+                options.DefaultScheme = "cookie";//使用Cookies认证
                 options.DefaultChallengeScheme = "oidc";//使用oidc
             })
-           .AddCookie("Cookies")//配置Cookies认证
+           .AddCookie("cookie")//配置Cookies认证
            .AddOpenIdConnect("oidc", options =>//配置oidc
            {
+               options.SignInScheme = "cookie";
                options.Authority = "http://localhost:5000";
                options.RequireHttpsMetadata = false;
 
-               options.ClientId = "mvc";
+               options.ClientId = "mvc-Hybrid-client";
                options.ClientSecret = "secret";
-               options.ResponseType = "code";
+               options.ResponseType = "code id_token";
+
+               options.Scope.Clear();
+               options.Scope.Add("openid");
 
                options.SaveTokens = true;
 
@@ -72,8 +76,8 @@ namespace MVCOpenIDClient
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute()
-                    .RequireAuthorization();
+                endpoints.MapDefaultControllerRoute();
+                    //.RequireAuthorization();
             });
         }
     }
