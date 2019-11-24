@@ -224,19 +224,31 @@ namespace IdentityServer
 
         private void ProcessLoginCallbackForOidc(AuthenticateResult externalResult, List<Claim> localClaims, AuthenticationProperties localSignInProps)
         {
-            // if the external system sent a session id claim, copy it over
-            // so we can use it for single sign-out
-            var sid = externalResult.Principal.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.SessionId);
-            if (sid != null)
-            {
-                localClaims.Add(new Claim(JwtClaimTypes.SessionId, sid.Value));
-            }
+            //// if the external system sent a session id claim, copy it over
+            //// so we can use it for single sign-out
+            //var sid = externalResult.Principal.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.SessionId);
+            //if (sid != null)
+            //{
+            //    localClaims.Add(new Claim(JwtClaimTypes.SessionId, sid.Value));
+            //}
+
+            //// if the external provider issued an id_token, we'll keep it for signout
+            //var id_token = externalResult.Properties.GetTokenValue("id_token");
+            //if (id_token != null)
+            //{
+            //    localSignInProps.StoreTokens(new[] { new AuthenticationToken { Name = "id_token", Value = id_token } });
+            //}
+
+            // make external logins persistent rather than session-duration
+            AuthenticationProperties props = new AuthenticationProperties();
+            props.IsPersistent = true;
+            props.ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration);
 
             // if the external provider issued an id_token, we'll keep it for signout
             var id_token = externalResult.Properties.GetTokenValue("id_token");
             if (id_token != null)
             {
-                localSignInProps.StoreTokens(new[] { new AuthenticationToken { Name = "id_token", Value = id_token } });
+                props.StoreTokens(new[] { new AuthenticationToken { Name = "id_token", Value = id_token } });
             }
         }
 
